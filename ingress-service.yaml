@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: demo-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # cert-manager.io/cluster-issuer: "letsencrypt"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  # tls:
+  # - hosts:
+  #   - rkdemotest.codes
+  #   secretName: echo-tls
+  rules:
+   - http:
+      paths:        
+        - path: /(|$)(.*)
+          backend:
+              serviceName: cities-cluster-ip-service
+              servicePort: 80
+        - path: /api(/|$)(.*)
+          backend:
+              serviceName: citiesapi-cluster-ip-service
+              servicePort: 80

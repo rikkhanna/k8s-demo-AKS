@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: citiesapi-cluster-ip-service
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: http
+  selector:
+    module: idacsorg-api
+    # module: citiesapi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: idacsorg-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      module: idacsorg-api
+  template:
+    metadata:
+      labels:
+        module: idacsorg-api
+    spec:
+      volumes:
+      - name: api-app-resources-volume
+        persistentVolumeClaim:
+          claimName: orgapi-app-resources-pvc
+      - name: api-shared-resources-volume
+        persistentVolumeClaim:
+          claimName: orgapi-shared-resources-pvc
+      containers:
+        - name: idacsorg-api
+          image: idacsmodule.azurecr.io/idacsorgapi:cloud
+          imagePullPolicy: "Always"
+          ports:
+            - name: http
+              containerPort: 80
+          # readinessProbe:
+          #   tcpSocket:
+          #     port: http
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/Language/Welcome
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          volumeMounts:
+            - name: api-app-resources-volume
+              mountPath: "/app/App_Resources"
+            - name: api-shared-resources-volume
+              mountPath: "/app/Shared_Resources"
+          resources:
+            requests:
+              memory: "500Mi"
+              cpu: "200m"
+            limits:
+              memory: "700Mi"
+              cpu: "250m"
+      imagePullSecrets:
+        - name: kubsecret

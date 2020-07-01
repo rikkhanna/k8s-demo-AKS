@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cities-deployment-latest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      module: cities
+  template:
+    metadata:
+      labels:
+        module: cities
+        demo: latest
+    spec:
+      containers:
+        - name: cities
+          image: idacsmodule.azurecr.io/cities-client
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "70Mi"
+              cpu: "50m"
+            limits:
+              memory: "90Mi"
+              cpu: "60m"
+      imagePullSecrets:
+        - name: kubsecret
+      
