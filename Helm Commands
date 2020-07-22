@@ -1,0 +1,13 @@
+helm create my-chart
+helm uninstall <release-name>
+
+helm install <name-of-chart> --generate-name
+
+// search charts in repos.
+helm search repo apache
+//fetch
+helm fetch stable/jenkins
+
+
+
+kubectl run --namespace default myredis-client --rm --tty -i --restart='Never' --env REDIS_PASSWORD=OiVkB64hrR --image docker.io/bitnami/redis:5.0.7-debian-10-r32 -- bash

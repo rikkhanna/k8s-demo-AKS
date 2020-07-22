@@ -1,0 +1,74 @@
+kubectl config  use-context minikube
+
+kubectl config view
+
+kubectl get nodes
+
+kubectl get pods -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx 
+
+docker build -t idacsmodule.azurecr.io/cities-client .
+
+docker push idacsmodule.azurecr.io/cities-client
+
+docker run -d -p 4200:80 --name client idacsmodule.azurecr.io/cities-client:latest
+
+docker login idacsmodule.azurecr.io
+
+kubectl get ingress
+
+kubectl logs cities-deployment-84b7485ccf-7hppl
+kubectl describe deployment cities-deployment
+
+kubectl get pods -n ingress-nginx
+
+kubectl get all
+
+kubectl get nodes
+ kubectl get storageClass
+ 
+ kubectl exec -it citiesapi-deployment-6b996dbf7-lppln bash
+  kubectl exec -it citiesapi-deployment-6b996dbf7-lppln -- /bin/bash
+
+
+kubectl create secret generic azure-secret --from-literal=azurestorageaccountname=idacsstore --from-literal=azurestorageaccountkey=H0ZErPYI42ToBSycTnuWn9wpKDTRoVlV1n357A8vcSn0obidLf0CIDh/PBsTBPKvvSqbN4eHsp61vYotKVs6mA==
+
+minikube addons list
+
+kubectl drain <node name> --ignore-daemonsets
+
+Kubectl scale deployment cities-deployment-latest --replicas=2
+
+ kubectl drain aks-agentpool-32243793-1 --ignore-daemonsets --delete-local-data
+ 
+ kubectl uncordon aks-agentpool-32243793-1
+ 
+ kubectl describe node aks-agentpool-32243793-0
+ 
+ -- Pod Affinity --
+ -- label node 
+ kubectl label nodes <node-name> key=value
+ 
+ -- yaml file
+ under spec:
+	nodeSelector:
+		key=value
+ -- apply changes
+ kubectl apply -f <file-name>
+ 
+
+----------------------------------------------
+-- taints and tolerations --
+kubectl taint nodes <node-name> key=value:effect
+
+ -- Change in yaml file under spec ---
+ spec:
+	tolerations:
+		- key: "team"
+		  operator: "Equal"
+		  value: "devops"
+		  effect: "NoSchedule"
+
+-- untaint a node --
+kubectl taint nodes <node-name>  key:effect-
+------------------------------------------------
+
