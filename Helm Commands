@@ -11,3 +11,21 @@ helm fetch stable/jenkins
 
 
 kubectl run --namespace default myredis-client --rm --tty -i --restart='Never' --env REDIS_PASSWORD=OiVkB64hrR --image docker.io/bitnami/redis:5.0.7-debian-10-r32 -- bash
+
+
+# Login to ACR
+az acr login -n $acrName --expose-token
+
+# create a sample Helm chart
+helm create myChart
+
+# package the chart
+helm package myChart
+
+az acr helm push myChart-0.1.0.tgz -n $acrName
+
+az acr helm repo add -n $acrName
+
+helm repo list
+
+helm search repo $acrName

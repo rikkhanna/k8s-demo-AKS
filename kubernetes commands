@@ -24,10 +24,10 @@ kubectl get pods -n ingress-nginx
 kubectl get all
 
 kubectl get nodes
- kubectl get storageClass
+kubectl get storageClass
  
- kubectl exec -it citiesapi-deployment-6b996dbf7-lppln bash
-  kubectl exec -it citiesapi-deployment-6b996dbf7-lppln -- /bin/bash
+kubectl exec -it citiesapi-deployment-6b996dbf7-lppln bash
+kubectl exec -it citiesapi-deployment-6b996dbf7-lppln -- /bin/bash
 
 
 kubectl create secret generic azure-secret --from-literal=azurestorageaccountname=idacsstore --from-literal=azurestorageaccountkey=H0ZErPYI42ToBSycTnuWn9wpKDTRoVlV1n357A8vcSn0obidLf0CIDh/PBsTBPKvvSqbN4eHsp61vYotKVs6mA==
@@ -38,15 +38,15 @@ kubectl drain <node name> --ignore-daemonsets
 
 Kubectl scale deployment cities-deployment-latest --replicas=2
 
- kubectl drain aks-agentpool-32243793-1 --ignore-daemonsets --delete-local-data
+kubectl drain aks-agentpool-32243793-1 --ignore-daemonsets --delete-local-data
  
- kubectl uncordon aks-agentpool-32243793-1
+kubectl uncordon aks-agentpool-32243793-1
  
- kubectl describe node aks-agentpool-32243793-0
+kubectl describe node aks-agentpool-32243793-0
  
- -- Pod Affinity --
- -- label node 
- kubectl label nodes <node-name> key=value
+-- Pod Affinity --
+-- label node 
+kubectl label nodes <node-name> key=value
  
  -- yaml file
  under spec:
@@ -72,3 +72,17 @@ kubectl taint nodes <node-name> key=value:effect
 kubectl taint nodes <node-name>  key:effect-
 ------------------------------------------------
 
+-- command to know different types of resources in kubernetes --
+
+kubectl api-resources
+
+---------------------------------------------------
+
+kubernetes diff -f <file-name-context>
+--------------------------------------------------
+
+watch kubectl get pods
+
+[watch] optional kubectl top pods
+--------------------------------------------------
+kubectl get endpoints
